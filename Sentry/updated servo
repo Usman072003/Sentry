@@ -1,1 +1,36 @@
+# so what I added was things to keep track of where servos are and keep them updated when you call control servo() in control(), not sure if will work since i cant run it but this is what made sense to be
+# assuming 0 = 90 degrees
+current_value_servo1 = 0
+current_value_servo2 = 0
+
+# Function to control continuous rotation servo speed and direction
+def control_servo_increment(servo, current_value, degree):
+    speed = current_value + degree
+    if speed < -1:
+        speed = -1
+    elif speed > 1:
+        speed = 1
+    servo.value = speed
+
+    return speed
+
+
+# Route to control servos
+@app.route('/control', methods=['POST'])
+def control():
+    global current_value_servo1, current_value_servo2
+   #may have to mess with this value
+    degree = 0.10
+    #upadte the current value
+    if 'servo1_left' in request.form:
+        current_value_servo1 = control_servo_increment(servo1, current_value_servo1, -degree)
+    elif 'servo1_right' in request.form:
+        current_value_servo1 = control_servo_increment(servo1, current_value_servo1, degree)
+    elif 'servo2_up' in request.form:
+        current_value_servo2 = control_servo_increment(servo2, current_value_servo2, degree)
+    elif 'servo2_down' in request.form:
+        current_value_servo2 = control_servo_increment(servo2, current_value_servo2, -degree)
+
+    return ('', 204)
+
 
