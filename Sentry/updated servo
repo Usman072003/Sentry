@@ -4,7 +4,7 @@ current_value_servo1 = 0
 current_value_servo2 = 0
 
 # Function to control continuous rotation servo speed and direction
-def control_servo_increment(servo, current_value, degree):
+def control_servo(servo, current_value, degree):
     speed = current_value + degree
     if speed < -1:
         speed = -1
@@ -23,13 +23,13 @@ def control():
     degree = 0.10
     #upadte the current value
     if 'servo1_left' in request.form:
-        current_value_servo1 = control_servo_increment(servo1, current_value_servo1, -degree)
+        current_value_servo1 = control_servo(servo1, current_value_servo1, -degree)
     elif 'servo1_right' in request.form:
-        current_value_servo1 = control_servo_increment(servo1, current_value_servo1, degree)
+        current_value_servo1 = control_servo(servo1, current_value_servo1, degree)
     elif 'servo2_up' in request.form:
-        current_value_servo2 = control_servo_increment(servo2, current_value_servo2, degree)
+        current_value_servo2 = control_servo(servo2, current_value_servo2, degree)
     elif 'servo2_down' in request.form:
-        current_value_servo2 = control_servo_increment(servo2, current_value_servo2, -degree)
+        current_value_servo2 = control_servo(servo2, current_value_servo2, -degree)
 
     return ('', 204)
 
