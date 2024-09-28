@@ -1,36 +1,25 @@
-# so what I added was things to keep track of where servos are and keep them updated when you call control servo() in control(), not sure if will work since i cant run it but this is what made sense to be
-# assuming 0 = 90 degrees
-current_value_servo1 = 0
-current_value_servo2 = 0
+from gpiozero import Servo
+from gpiozero.pins.pigpio import PiGPIOFactory
+import time
 
-# Function to control continuous rotation servo speed and direction
-def control_servo(servo, current_value, degree):
-    speed = current_value + degree
-    if speed < -1:
-        speed = -1
-    elif speed > 1:
-        speed = 1
-    servo.value = speed
+factory = PiGPIOFactory()
 
-    return speed
+servo1_pin = 13
+servo2_pin = 12
 
+servo1 = Servo(servo1_pin, pin_factory=factory)
+servo2 = Servo(servo2_pin, pin_factory=factory)
 
-# Route to control servos
-@app.route('/control', methods=['POST'])
-def control():
-    global current_value_servo1, current_value_servo2
-   #may have to mess with this value
-    degree = 0.10
-    #upadte the current value
-    if 'servo1_left' in request.form:
-        current_value_servo1 = control_servo(servo1, current_value_servo1, -degree)
-    elif 'servo1_right' in request.form:
-        current_value_servo1 = control_servo(servo1, current_value_servo1, degree)
-    elif 'servo2_up' in request.form:
-        current_value_servo2 = control_servo(servo2, current_value_servo2, degree)
-    elif 'servo2_down' in request.form:
-        current_value_servo2 = control_servo(servo2, current_value_servo2, -degree)
+def set_servo_position(servo, position):
+    servo.value = position
+    print(f"Servo position set to {position}")
 
-    return ('', 204)
+for i in range(3):
+    x = float(input())
+    print("enter servo1")
+    set_servo_position(servo1, x)
 
-
+for i in range(3):
+    x = float(input())
+    print("enter servo2")
+    set_servo_position(servo2, x)
