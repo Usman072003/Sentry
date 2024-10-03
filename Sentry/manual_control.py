@@ -65,3 +65,72 @@ def main(stdscr):
 
 # Start the `curses` application
 curses.wrapper(main)
+
+#new
+import curses
+from gpiozero import Servo
+from gpiozero.pins.pigpio import PiGPIOFactory
+import time
+
+# Set up GPIO control using the pigpio factory
+factory = PiGPIOFactory()
+
+# Define pins for the servos
+servo1_pin = 13  # Horizontal control (e.g., left-right)
+servo2_pin = 18  # Vertical control (e.g., up-down)
+
+# Initialize the servos
+servo1 = Servo(servo1_pin, pin_factory=factory)
+servo2 = Servo(servo2_pin, pin_factory=factory)
+
+# Function to st srvo positions and print a massage
+def set_servo_position(servo, position):
+    servo.value = position
+    print(f"Servo position set to {position}")
+
+# Main function to handle the `curses` interface
+def main(stdscr):
+    # Initialize the current positions of the servos
+    curr1 = 0
+    curr2 = 0
+
+    # Clear screen and display instructions
+    stdscr.clear()
+    stdscr.addstr(0, 0, "Control Servo1: 8 to increase, 5 to decrease | Control Servo2: 6 to increase,>    
+    stdscr.addstr(2, 0, f"Servo1 Position: {curr1}, Servo2 Position: {curr2}")
+
+    while True:
+        # Wait for a single key press
+        key = stdscr.getch()
+
+        # Control Servo1 (Horizontal Movement)
+        if key == ord('d') and curr1 < 1:  # Ensure the servo does not exceed the upper limit
+            curr1 = min(1, curr1 + 0.05)
+            set_servo_position(servo1, curr1)
+         elif key == ord('a') and curr1 > -1:  # Ensure the servo does not exceed the lower limit
+            curr1 = max(-1, curr1 - 0.05)
+            set_servo_position(servo1, curr1)
+
+        # Control Servo2 (Vertical Movement)
+        elif key == ord('w') and curr2 < 1:  # Ensure the servo does not exceed the upper limit
+            curr2 = min(1, curr2 + 0.05)
+            set_servo_position(servo2, curr2)
+        elif key == ord('s') and curr2 > -1:  # Ensure the servo does not exceed the lower limit
+            curr2 = max(-1, curr2 - 0.05)
+            set_servo_position(servo2, curr2)
+
+        # Exit the program
+        elif key == ord('q'):
+            stdscr.addstr(4, 0, "Exiting the program.")
+            stdscr.refresh()
+            time.sleep(1)  # Pause for a moment before exiting
+            break
+
+        # Update the display with new positions
+        stdscr.clear()
+        stdscr.addstr(0, 0, "Control Servo1: 8 to increase, 5 to decrease | Control Servo2: 6 to incre>       
+        stdscr.addstr(2, 0, f"Servo1 Position: {curr1:.2f}, Servo2 Position: {curr2:.2f}")
+        stdscr.refresh()
+
+# Start the `curses` application
+curses.wrapper(main)
