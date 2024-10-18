@@ -80,6 +80,7 @@ def main_curses(stdscr):
     stdscr.clear()
     stdscr.addstr(0, 0, "Control Servo1: d to increase, a to decrease | Control Servo2: w to increase, s to decrease")
     stdscr.addstr(2, 0, f"Servo1 Position: {curr1}, Servo2 Position: {curr2}")
+    stdscr.refresh()
 
     while True:
         # Wait for a single key press
@@ -101,7 +102,6 @@ def main_curses(stdscr):
             curr2 = max(0, curr2 - 5)
             control_servo(servo2, curr2)
 
-
         # Exit the program
         elif key == ord('q'):
             stdscr.addstr(4, 0, "Exiting the program.")
@@ -110,8 +110,10 @@ def main_curses(stdscr):
 
         # Update the display with new positions
         stdscr.clear()
-        stdscr.addstr(0, 0, "Control Servo1: d to increase, a to decrease | Control Servo2: w to increase, s to decreas>        stdscr.addstr(2, 0, f"Servo1 Position: {curr1}, Servo2 Position: {curr2}")
+        stdscr.addstr(0, 0, "Control Servo1: d to increase, a to decrease | Control Servo2: w to increase, s to decrease")
+        stdscr.addstr(2, 0, f"Servo1 Position: {curr1}, Servo2 Position: {curr2}")
         stdscr.refresh()
+
 
 # Function to run curses in a separate thread
 def run_curses():
