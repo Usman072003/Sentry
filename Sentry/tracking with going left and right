@@ -24,6 +24,7 @@ kit.servo[tilt_servo_channel].angle = tilt_angle
 pan_step = 2  # The amount the servo moves for each step (adjust as needed)
 tilt_step = 2  # Reduced tilt step for smoother movement
 frame_center_x = 320  # Assuming a 640x480 frame, so center X is 320
+frame_center_y = 240  # Center Y coordinate for a 640x480 frame
 tolerance = 10  # Reduced tolerance for smoother, more continuous tracking
 
 # Servo movement smoothing (optional)
