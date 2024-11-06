@@ -1,0 +1,63 @@
+#still need to fix the quittibng option
+import curses
+import subprocess
+import time
+
+# Define the exact commands for each script
+script_commands = {
+    "1": ["sudo", "my_project_env/bin/python3", "tracking_sensor1.py"],
+    "2": ["sudo", "my_project_env/bin/python3", "tracking_sensor2.py"],
+    "3": ["sudo", "my_project_env/bin/python3", "tracking_sensor3.py"],
+    "4": ["sudo", "my_project_env/bin/python3", "tracking_sensor4.py"],
+    "5": ["sudo", "my_project_env/bin/python3", "tracking_sensor5.py"]
+}
+
+# Dictionary to store running processes for each script
+running_scripts = {}
+
+# Function to execute a script command
+def run_script(script_num):
+    command = script_commands.get(script_num)
+    if command:
+        print(f"Running script {script_num}")
+        running_scripts[script_num] = subprocess.Popen(command)
+
+# Function to stop a running script if it’s already running
+def stop_running_script(script_num):
+    if script_num in running_scripts and running_scripts[script_num].poll() is None:
+        print(f"Stopping script {script_num}")
+        running_scripts[script_num].terminate()
+        running_scripts[script_num].wait()
+        del running_scripts[script_num]
+
+# Function to stop all running scripts
+def stop_all_scripts():
+    for script_num in list(running_scripts.keys()):
+        stop_running_script(script_num)
+
+# Function to listen for key presses and manage scripts
+def key_listener(stdscr):
+    stdscr.nodelay(True)
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "Press 1-5 to run scripts, or 'q' to stop any running script and return to options.")
+        key = stdscr.getch()
+
+        if key in (ord('1'), ord('2'), ord('3'), ord('4'), ord('5')):
+            script_num = chr(key)  # Convert key to string
+            stop_all_scripts()  # Stop all running scripts before starting a new one
+            run_script(script_num)  # Start the selected script
+            stdscr.addstr(2, 0, f"Script {script_num} is running. Press 'q' to stop and return to menu.")
+
+        elif key == ord('q'):
+            stop_all_scripts()  # Stop all scripts
+            stdscr.addstr(2, 0, "All scripts stopped. Press 1-5 to start a new script.")
+            stdscr.refresh()
+            time.sleep(0.5)  # Brief pause for user feedback
+
+        stdscr.refresh()
+        time.sleep(0.1)  # Prevent high CPU usage
+
+# Run curses key listener
+if __name__ == "__main__":
+    curses.wrapper(key_listener)
