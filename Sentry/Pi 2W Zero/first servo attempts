@@ -1,0 +1,68 @@
+from gpiozero import Servo
+from gpiozero.pins.pigpio import PiGPIOFactory
+import time
+
+factory = PiGPIOFactory()
+
+servo1_pin = 13
+servo2_pin = 12
+
+servo1 = Servo(servo1_pin, pin_factory=factory)
+servo2 = Servo(servo2_pin, pin_factory=factory)
+
+def set_servo_position(servo, position):
+    servo.value = position
+    print(f"Servo position set to {position}")
+
+for i in range(3):
+    x = float(input())
+    print("enter servo1")
+    set_servo_position(servo1, x)
+
+for i in range(3):
+    x = float(input())
+    print("enter servo2")
+    set_servo_position(servo2, x)
+
+# new stuff under so we don't lose old
+#but this is how i imported keyboard movement to the camera, not sure if we have to add time to slow down the movement, basically a delay
+from gpiozero import Servo
+from gpiozero.pins.pigpio import PiGPIOFactory
+import keyboard
+import time
+
+factory = PiGPIOFactory()
+
+servo1_pin = 13  # Horizontal control (e.g., left-right)
+servo2_pin = 12  # Vertical control (e.g., up-down)
+
+servo1 = Servo(servo1_pin, pin_factory=factory)
+servo2 = Servo(servo2_pin, pin_factory=factory)
+
+move = 0.1
+
+def set_servo_position(servo, position):
+    servo.value = position
+    print(f"Servo position set to {position}")
+
+for i in range(3):
+    x = float(input("Enter position for servo1 (horizontal): "))
+    set_servo_position(servo1, x)
+
+for i in range(3):
+    x = float(input("Enter position for servo2 (vertical): "))
+    set_servo_position(servo2, x)
+
+while True:
+    if keyboard.is_pressed('w'):
+        servo1_position = min(servo1_position + move, 1)  # Move servo1 up
+        set_servo_position(servo1, servo1_position)
+    elif keyboard.is_pressed('s'):
+        servo1_position = max(servo1_position - move, -1)  # Move servo1 down
+        set_servo_position(servo1, servo1_position)
+    elif keyboard.is_pressed('a'):
+        servo2_position = max(servo2_position - move, -1)  # Move servo2 left
+        set_servo_position(servo2, servo2_position)
+    elif keyboard.is_pressed('d'):
+        servo2_position = min(servo2_position + move, 1)  # Move servo2 right
+        set_servo_position(servo2, servo2_position)
