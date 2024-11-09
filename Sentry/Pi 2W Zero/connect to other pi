@@ -1,0 +1,75 @@
+import subprocess
+import socket
+import paramiko
+import time
+
+# Function to send servo control commands to Pi Zero 2 W (via socket)
+def send_command(command):
+    host = '192.168.50.105'  # Replace with the actual IP of your Pi Zero 2 W
+    port = 65432                   # Same port as in the server
+
+    try:
+        # Create a socket connection
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((host, port))
+        s.sendall(command.encode('utf-8'))  # Send the command to the server
+    except Exception as e:
+        print(f"Failed to send command: {e}")
+    finally:
+        s.close()
+
+# Function to run the camera stream on the Pi 5 (local execution)
+def run_camera_stream():
+    try:
+        print("Starting camera stream...")
+        camera_process = subprocess.Popen(['python3', 'camera_stream.py'])
+        return camera_process
+    except Exception as e:
+        print(f"Error starting camera stream: {e}")
+        return None
+
+# Function to SSH into Pi Zero 2 W and start servo server
+def start_servo_server():
+    pi_zero_ip = '192.168.50.105'  # IP of Pi Zero 2 W
+    pi_zero_user = 'ahmadbaig'
+    pi_zero_password = 'Az544382'
+
+    # Initialize SSH client
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    try:
+        # Connect to Pi Zero 2 W
+        ssh.connect(pi_zero_ip, username=pi_zero_user, password=pi_zero_password)
+        # Run the servo.py server script remotely
+        stdin, stdout, stderr = ssh.exec_command('sudo python3 servo.py')
+
+        # Optionally, you can monitor the output from servo.py
+        for line in iter(stdout.readline, ""):
+            print(line, end="")
+        return ssh
+    except Exception as e:
+        print(f"Failed to connect to Pi Zero 2 W: {e}")
+        return None
+
+if __name__ == "__main__":
+    # Step 1: Run the camera stream locally on Pi 5
+    camera_process = run_camera_stream()
+
+    # Step 2: SSH into Pi Zero 2 W and start the servo server
+    ssh_client = start_servo_server()
+
+    if ssh_client and camera_process:
+        while True:
+            # Step 3: Get user input to control servos
+            command = input("Enter command (left, right, up, down, reset, or quit): ").strip()
+            if command == 'quit':
+                send_command(command)
+                break
+            send_command(command)
+
+        # Close the camera process when finished
+        camera_process.terminate()
+        ssh_client.close()
+    else:
+        print("Failed to start one of the processes.")
