@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Sentry Security Camera</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Smooth scrolling behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+  <body>
+
+    <a href="stream.html" target="_blank" class="floating-button">
+      Go To Stream
+    </a>
+    <div class="banner" id="banner">
+      <p>For Demo purposes, Login feature has been disabled!</p>
+      <span class="close-btn" onclick="closeBanner()">×</span>
+    </div>
+
+    <!-- Header section -->
+    <header class="header">
+      <div class="logo">
+        <img src="sentry logo 2.png" alt="Logo" class="logo-image" />
+        <span>Your Private Personal</span>
+      </div>
+      <div class="header-buttons">
+        <a href="login.html" class="header-button">Login</a>
+        <a href="#contact-section" class="header-button">Contact</a> <!-- Link to Contact Section -->
+      </div>
+    </header>
+
+
+    <section class="video-section">
+      <video autoplay muted loop class="background-video">
+        <source src="sentry vid.mov" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </section>
+
+    <!-- About Us section -->
+    <section class="about-us">
+      <div class="about">
+        <img src="sentry pic.jpg " class="pic" />
+        <div class="text">
+          <h2>Sentry MARK I</h2>
+          <h5>$49.99 | <span>2GB Ram | 64GB Memory</span></h5>
+          <p>The Advanced Sentry Security Camera offers robust and flexible security solutions, combining intelligent tracing and recording capabilities with fully manual control for precise vertical and horizontal movement. Featuring an integrated laser for targeted monitoring, the camera is accessible online, allowing remote viewing and secure access to recorded footage. This versatile system includes multiple modes, such as the powerful Sentry Mode, for automated, vigilant tracking. Designed for adaptability, it’s ideal for keeping an eye on critical areas, with intuitive controls and responsive features to suit any security need.</p>
+          <div class="data">
+            <a href="#" class="hire">Coming Soon</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-us">
+      <div class="about">
+        <img src="sentry pic.jpg" class="pic" />
+        <div class="text">
+          <h2>Sentry MARK II</h2>
+          <h5>$64.99 | <span>8GB Ram | 128GB Memory</span></h5>
+          <p>Mark II of Sentry Security Camera is even faster and more resilient than then previous model. With an increased memory of 128GB, and an 8GB Ram processor with real-time tracing. With incredible speed. Your active personnel protect your privacy.</p>
+          <div class="data">
+            <a href="#" class="hire">Coming Soon</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="loop-video-section">
+      <h2 class="video-header">Our Product in Action</h2>
+      <div class="loop-video-container">
+        <video autoplay loop muted playsinline>
+          <source src="tracking.mov" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </section>
+
+    <section class="full-width-video-section">
+      <h2 class="video-header">Demo Videos</h2>
+      
+      <div class="video-row">
+        <!-- Video 1 -->
+        <div class="video-container">
+          <video controls>
+            <source src="Sentery_Security_Camera_Demo2.mov" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <!-- Video 2 -->
+        <div class="video-container">
+          <video controls>
+            <source src="sentry vid.mov" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- Contact Cards Section with Target ID -->
+    <section class="contact-section">
+      <h2 class="contact-header">Contact</h2>
+      <div class="card-container">
+        <div class="card">
+          <img src="usman.jpg" alt="Usman Naveed" style="width:100%">
+          <div class="card-content">
+            <h2>Usman Naveed</h2>
+            <p class="title">Founder</p>
+            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+            <p>example@example.com</p>
+            <p><button class="button">Contact</button></p>
+          </div>
+        </div>
+    
+        <div class="card">
+          <img src="ahmad.png" alt="Ahmad Baig" style="width:100%">
+          <div class="card-content">
+            <h2>Ahmad Baig</h2>
+            <p class="title">Co-Founder</p>
+            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+            <p>example@example.com</p>
+            <p><button class="button">Contact</button></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+      
+    </div>
+    <div>
+      <footer>
+        <p>&copy; 2023 Sentry Security. All rights reserved.</p>
+        <p>Follow us: 
+            <a href="https://www.linkedin.com/in/ahmad-baig-9a4251240/" target="_blank">LinkedIn</a> | 
+            <a href="https://twitter.com/yourusername" target="_blank">Twitter</a> | 
+            <a href="https://github.com/Ahmaddbaig" target="_blank">GitHub</a>
+        </p>
+    </footer>
+    </div>
+
+    <script>
+      // JavaScript function to close the banner
+      function closeBanner() {
+        document.getElementById("banner").style.display = "none";
+      }
+    </script>
+    
+  </body>
+</html>
