@@ -17,14 +17,6 @@
   animation: fadeIn 1.5s ease forwards;
 }
 
-.contact-header {
-  font-size: 2.5em;
-  color: #333;
-  text-align: center;
-  margin-bottom: 40px; /* Adds spacing between the header and team members */
-  position: relative; /* Centers the header within the section */
-}
-
 .team-member {
   background: #ffffff;
   width: 300px;
@@ -917,14 +909,7 @@ footer {
 .contact-header {
   font-size: 2.5em;
   color: #333;
-  margin-bottom: 20px; /* Adds spacing between the header and the content */
-  text-align: center; /* Centers the text horizontally */
-  margin-top: 0; /* Ensures no extra space above */
-  position: absolute; /* Positions it at the top */
-  top: 20px; /* Adjusts the position from the top */
-  left: 50%; /* Centers the header horizontally */
-  transform: translateX(-50%); /* Ensures proper centering */
-  z-index: 10; /* Ensures it is above other elements */
+  margin-bottom: 20px; /* Adds spacing between the header and the cards */
 }
 
 /* Card Container (Reused from Earlier Code) */
